@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --neon-a: #00f5ff;
+    --neon-b: #bf5fff;
+    --glass: rgba(18, 22, 42, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.12);
+  }
+
+  body {
+    @apply min-h-dvh bg-[#070916] text-slate-100 antialiased;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.12), transparent 55%),
+      radial-gradient(ellipse at 80% 30%, rgba(191, 95, 255, 0.14), transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(8, 47, 73, 0.6), transparent 45%);
+  }
+
+  ::selection {
+    @apply bg-cyan-400/30 text-white;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-white/5 shadow-[0_0_40px_rgba(0,245,255,0.08)] backdrop-blur-xl;
+  }
+
+  .neon-text {
+    background: linear-gradient(90deg, #00f5ff, #9b5cff, #ff4da6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-neon {
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 font-semibold
+      text-white transition-all;
+    background: linear-gradient(120deg, #00f5ff, #8b5cf6);
+    box-shadow: 0 10px 40px rgba(0, 245, 255, 0.18);
+  }
+
+  .btn-neon:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5
+      py-2.5 font-semibold text-white backdrop-blur-md transition hover:border-cyan-400/60 hover:bg-cyan-500/10;
+  }
+}

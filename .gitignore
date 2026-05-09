@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Env & secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Builds
+client/dist/
+dist/
+
+# Logs & OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Optional: keep JSON DB out of git in production repos (remove these lines if you want seed DB tracked)
+# server/database/*.json

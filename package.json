@@ -1,0 +1,12 @@
+{
+  "name": "ludo-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Neon multiplayer Ludo — React/Vite + Express/Socket.IO + JSON file persistence",
+  "scripts": {
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "start:server": "npm start --prefix server",
+    "build:client": "npm run build --prefix client"
+  }
+}
