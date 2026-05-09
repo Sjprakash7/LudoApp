@@ -1,35 +1,32 @@
-/** Mirror server/constants for visualization */
+/** Engine outer ring sync */
 export const START_AT = [0, 13, 26, 39];
 export const SAFE_OUTER = new Set([0, 8, 13, 21, 26, 34, 39, 47]);
 
-const COLORS = [
-  'from-rose-500/90 to-orange-400/90',
-  'from-emerald-400/90 to-lime-300/90',
-  'from-amber-300/90 to-yellow-200/90',
-  'from-sky-500/90 to-indigo-400/90',
-];
+/** Classic board visuals: TL green 1 · TR yellow 2 · BL red 0 · BR blue 3 */
+export const SEAT_HEX = ['#C62828', '#2E7D32', '#FDD835', '#1565C0'];
 
-export function seatGradientClass(seat) {
-  return COLORS[seat % COLORS.length];
+/** Yard token anchor % inside square board — matches corner homes */
+export const YARD = {
+  0: { x: 24, y: 74 }, // Red bottom-left
+  1: { x: 24, y: 26 }, // Green top-left
+  2: { x: 76, y: 26 }, // Yellow top-right
+  3: { x: 76, y: 74 }, // Blue bottom-right
+};
+
+export function seatStroke(seat) {
+  return SEAT_HEX[seat % 4];
 }
 
-/** Map outer cell index to unit coordinates (0-100) on a circular ring */
+/** Map outer cell index — ring overlay for pawn positions (readable + smooth) */
 export function outerCellXY(index) {
   const t = index / 52;
   const angle = t * Math.PI * 2 - Math.PI / 2;
-  const r = 38;
+  const r = 36;
   return {
     x: 50 + r * Math.cos(angle),
     y: 50 + r * Math.sin(angle),
   };
 }
-
-export const YARD = {
-  0: { x: 22, y: 22 },
-  1: { x: 78, y: 22 },
-  2: { x: 78, y: 78 },
-  3: { x: 22, y: 78 },
-};
 
 export function homeBaseXY(seat) {
   return YARD[seat];

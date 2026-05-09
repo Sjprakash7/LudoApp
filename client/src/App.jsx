@@ -3,7 +3,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import { SocketProvider } from './context/SocketContext.jsx';
 import { AppShell } from './layouts/AppShell.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
-import { Splash } from './pages/Splash.jsx';
+import { HomeMenu } from './pages/HomeMenu.jsx';
 import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
@@ -24,7 +24,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<AppShell />}>
-              <Route index element={<Splash />} />
+              <Route index element={<HomeMenu />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route

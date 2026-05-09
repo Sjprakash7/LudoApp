@@ -35,6 +35,31 @@ export async function findByEmailOrMobile({ email, mobile }) {
   );
 }
 
+/** ~100KB ASCII cap keeps JSON users file healthy; rejects huge base64 payloads. */
+const MAX_AVATAR_CHARS = 120000;
+
+export function coerceAvatar(raw) {
+  if (raw == null || raw === '') return null;
+  const s = String(raw).trim();
+  if (s.length > MAX_AVATAR_CHARS) {
+    const err = new Error('Avatar data too large — use a smaller JPG/PNG.');
+    err.status = 400;
+    throw err;
+  }
+  if (
+    s.startsWith('data:image/jpeg') ||
+    s.startsWith('data:image/jpg') ||
+    s.startsWith('data:image/png') ||
+    s.startsWith('data:image/webp')
+  )
+    return s;
+  if (/^https:\/\/.{4,4096}$/i.test(s)) return s;
+  if (/^http:\/\/localhost(:\d+)?/i.test(s)) return s;
+  const err = new Error('Avatar must be a JPG/PNG data URL from upload or https image URL.');
+  err.status = 400;
+  throw err;
+}
+
 export async function registerUser({ email, mobile, password, avatar }) {
   const e = normalizeEmail(email);
   const m = normalizeMobile(mobile);
@@ -54,6 +79,7 @@ export async function registerUser({ email, mobile, password, avatar }) {
     err.status = 409;
     throw err;
   }
+  const chosen = coerceAvatar(avatar);
   const hash = await bcrypt.hash(password, 10);
   const user = {
     id: uuidv4(),
@@ -66,7 +92,7 @@ export async function registerUser({ email, mobile, password, avatar }) {
     createdAt: new Date().toISOString(),
     lastLogin: '',
     token: '',
-    avatar: avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(uuidv4())}`,
+    avatar: chosen || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(uuidv4())}`,
     wins: 0,
     losses: 0,
   };
