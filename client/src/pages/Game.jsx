@@ -104,7 +104,7 @@ export function Game() {
 
   return (
     <div className="ludo-pattern-bg min-h-[100dvh] px-2 pb-4 pt-2 sm:px-4">
-      <div className="mx-auto mb-4 max-w-lg rounded-[2rem] border border-white/10 bg-slate-950/80 p-4 shadow-[0_30px_70px_rgba(0,0,0,.45)] backdrop-blur-xl">
+      <div className="mx-auto mb-4 max-w-lg neon-card p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="text-[10px] uppercase tracking-[0.35em] text-sky-300/80">Room code</div>
@@ -112,20 +112,20 @@ export function Game() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {isHost && room?.status === 'waiting' && (
-              <button type="button" className="menu-pyramid-btn !px-5 !py-3 !text-sm" onClick={start}>
+              <button type="button" className="btn-glow !px-5 !py-3 !text-sm" onClick={start}>
                 Start match
               </button>
             )}
             <button
               type="button"
-              className="rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/90 transition hover:border-cyan-400/40 hover:bg-cyan-500/10"
+              className="btn-glow rounded-2xl bg-slate-900/90 px-3 py-2 text-sm text-white/90"
               onClick={() => setMuted(!muted)}
             >
               {muted ? '🔇 Mute' : '🔊 Sound'}
             </button>
             <button
               type="button"
-              className="rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/90 transition hover:border-sky-400/40 hover:bg-sky-500/10"
+              className="btn-glow rounded-2xl bg-slate-900/90 px-3 py-2 text-sm text-white/90"
               onClick={() => setChatOpen((v) => !v)}
             >
               Chat
@@ -135,7 +135,7 @@ export function Game() {
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-300">
           <span>Players: {room?.players?.length ?? 0}/4</span>
           <span>Status: {room?.status ?? 'loading'}</span>
-          <Link to="/lobby" className="rounded-2xl border border-slate-700/40 bg-white/5 px-3 py-2 text-sm text-slate-100 transition hover:bg-white/10">
+          <Link to="/lobby" className="btn-glow rounded-full bg-slate-900/90 px-3 py-2 text-sm text-white/90">
             ← Back to lobby
           </Link>
         </div>
@@ -162,7 +162,7 @@ export function Game() {
         />
       </div>
 
-      <div className="mx-auto mb-3 max-w-[min(96vw,440px)]">
+      <div className="mx-auto mb-3 max-w-[min(96vw,440px)] neon-card p-4">
         <LudoBoard
           tokens={g?.tokens ?? []}
           turnSeat={g?.turnSeat}
@@ -198,7 +198,7 @@ export function Game() {
 
       <div className="mx-auto flex max-w-lg flex-wrap items-center justify-center gap-3">
         {g?.awaitingDice && myTurn && (
-          <motion.button type="button" className="menu-pyramid-btn !px-8 !py-3 text-base" onClick={roll} whileTap={{ scale: 0.97 }}>
+          <motion.button type="button" className="btn-glow !px-8 !py-3 text-base" onClick={roll} whileTap={{ scale: 0.97 }}>
             Roll dice
           </motion.button>
         )}

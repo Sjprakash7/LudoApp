@@ -33,76 +33,113 @@ export function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <section className="grid gap-4 md:grid-cols-3">
-        <GlassCard className="md:col-span-2">
-          <motion.h1
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-black text-white"
-          >
-            Welcome back,{' '}
-            <span className="neon-text">{user?.username || user?.email || user?.mobile || 'player'}</span>
-          </motion.h1>
-          <p className="mt-2 max-w-prose text-slate-300">
-            Neon tables are live — spin up a private code room or queue with friends. Real-time
-            sockets keep dice and pawns in lockstep.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/room/create" className="btn-neon">
-              Create room
-            </Link>
-            <Link to="/room/join" className="btn-outline">
-              Join with code
-            </Link>
-            <Link to="/game/quick" className="btn-outline border-cyan-400/40 text-cyan-100">
-              Solo vs bots
-            </Link>
+      <section className="grid gap-5 xl:grid-cols-[1.6fr_0.9fr]">
+        <GlassCard className="glass-card p-6">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/70">Welcome back</p>
+              <h1 className="mt-3 text-4xl font-black tracking-[0.18em] text-white sm:text-5xl">
+                {user?.username || 'Ludo Champion'}
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
+                A premium Ludo arena with real-time rooms, glowing board effects, and smooth mobile gameplay.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="stat-pill">Wins {wins}</div>
+              <div className="stat-pill">Win rate {pct}%</div>
+            </div>
+          </div>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-3">
+            <div className="mode-card bg-gradient-to-br from-slate-900 to-slate-950 text-white">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Level</p>
+              <p className="mt-3 text-3xl font-black text-white">{Math.min(25, Math.max(1, Math.floor((wins + losses) / 3) + 1))}</p>
+            </div>
+            <div className="mode-card bg-gradient-to-br from-slate-900 to-slate-950 text-white">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Coins</p>
+              <p className="mt-3 text-3xl font-black text-white">2.8K</p>
+            </div>
+            <div className="mode-card bg-gradient-to-br from-slate-900 to-slate-950 text-white">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Gems</p>
+              <p className="mt-3 text-3xl font-black text-white">75</p>
+            </div>
           </div>
         </GlassCard>
-        <GlassCard>
-          <h3 className="text-sm font-semibold uppercase tracking-widest text-slate-400">Record</h3>
-          <p className="mt-4 text-4xl font-black text-white">
-            {wins}W — {losses}L
-          </p>
-          <p className="mt-2 text-sm text-slate-400">Win rate {pct}%</p>
-        </GlassCard>
+
+        <div className="grid gap-4">
+          <GlassCard className="glass-card overflow-hidden p-5">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Daily event</p>
+                <h2 className="mt-2 text-2xl font-black text-white">Champion quest</h2>
+              </div>
+              <span className="banner-chip">Live</span>
+            </div>
+            <div className="mt-5 rounded-[1.75rem] bg-slate-950/80 p-4 text-sm text-slate-300 shadow-[inset_0_0_35px_rgba(0,0,0,.15)]">
+              Win 2 matches today to unlock a Dice Booster and extra rewards.
+            </div>
+            <button className="btn-glow mt-5 w-full">Play now</button>
+          </GlassCard>
+
+          <GlassCard className="glass-card p-5">
+            <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Match status</p>
+            <div className="mt-4 grid gap-3">
+              <div className="mode-card bg-slate-900/95">
+                <p className="text-sm text-slate-400">Current lobby</p>
+                <p className="mt-2 text-xl font-black text-white">{lobby.rooms?.length ?? 0} rooms</p>
+              </div>
+              <div className="mode-card bg-slate-900/95">
+                <p className="text-sm text-slate-400">Recent plays</p>
+                <p className="mt-2 text-xl font-black text-white">{history.length} matches</p>
+              </div>
+            </div>
+          </GlassCard>
+        </div>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-2">
-        <GlassCard>
-          <h2 className="mb-4 text-lg font-bold text-white">Live &amp; listed rooms</h2>
-          <ul className="space-y-3 text-sm">
-            {(lobby.rooms || []).slice(0, 8).map((r) => (
-              <li
-                key={r.roomId}
-                className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-950/40 px-3 py-2"
-              >
+      <section className="grid gap-5 xl:grid-cols-[1.35fr_0.85fr]">
+        <GlassCard className="glass-card p-5">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-white">Live rooms</h3>
+              <p className="text-sm text-slate-400">Open games you can join instantly.</p>
+            </div>
+            <Link to="/room/create" className="text-sm font-semibold text-cyan-200 hover:text-white">
+              New room
+            </Link>
+          </div>
+          <div className="space-y-4">
+            {(lobby.rooms || []).slice(0, 4).map((r) => (
+              <div key={r.roomId} className="grid gap-3 rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-4 sm:grid-cols-[1fr_auto]">
                 <div>
-                  <div className="font-mono text-cyan-200">{r.roomId}</div>
-                  <div className="text-xs text-slate-500">{r.status}</div>
+                  <p className="font-semibold text-white">{r.roomId}</p>
+                  <p className="text-sm text-slate-400">{r.status}</p>
                 </div>
-                <Link to={`/game/${r.roomId}`} className="btn-outline px-2 py-1 text-xs">
-                  Open
+                <Link className="stat-pill" to={`/game/${r.roomId}`}>
+                  Join
                 </Link>
-              </li>
+              </div>
             ))}
             {!(lobby.rooms || []).length && (
-              <p className="text-slate-500">No rooms yet — be the first host.</p>
+              <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-4 text-sm text-slate-400">
+                No rooms yet — create one and invite friends.
+              </div>
             )}
-          </ul>
+          </div>
         </GlassCard>
 
-        <GlassCard>
-          <h2 className="mb-4 text-lg font-bold text-white">Recent matches</h2>
-          <ul className="space-y-3 text-sm text-slate-300">
-            {history.map((m, i) => (
-              <li key={`${m.roomId}-${i}`} className="rounded-xl border border-white/5 bg-slate-950/30 px-3 py-2">
-                Room <span className="font-mono text-cyan-200">{m.roomId}</span> — winner seat{' '}
-                <span className="text-white">{m.winner}</span>
-              </li>
+        <GlassCard className="glass-card p-5">
+          <h3 className="text-xl font-bold text-white">Recent matches</h3>
+          <div className="mt-4 space-y-3">
+            {(history || []).slice(0, 5).map((m, i) => (
+              <div key={`${m.roomId}-${i}`} className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-4">
+                <p className="font-semibold text-white">Room {m.roomId}</p>
+                <p className="text-sm text-slate-400">Winner seat {m.winner}</p>
+              </div>
             ))}
-            {!history.length && <li className="text-slate-500">Play a match to populate history.</li>}
-          </ul>
+            {!history.length && <p className="text-sm text-slate-500">Play a match to start showing results.</p>}
+          </div>
         </GlassCard>
       </section>
     </div>
