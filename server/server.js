@@ -10,7 +10,7 @@ import authRoutes from './routes/auth.js';
 import roomRoutes from './routes/rooms.js';
 import adminRoutes from './routes/admin.js';
 import matchRoutes from './routes/match.js';
-import { PORT, JWT_SECRET } from './utils/env.js';
+import { PORT, JWT_SECRET, allowedCorsOrigins } from './utils/env.js';
 import { ensureSeedAdmin } from './services/userService.js';
 import { configureDebugDiceFromEnv } from './socket/gameRooms.js';
 import { registerSocketHandlers } from './socket/handlers.js';
@@ -29,9 +29,10 @@ if (!process.env.JWT_SECRET) {
 const app = express();
 const server = http.createServer(app);
 
+const corsOrigins = allowedCorsOrigins();
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: corsOrigins,
     methods: ['GET', 'POST'],
   },
 });
@@ -41,7 +42,11 @@ app.locals.jwtSecret = JWT_SECRET;
 
 app.use(
   cors({
-    origin: '*',
+    origin(origin, cb) {
+      if (!origin) return cb(null, true);
+      if (corsOrigins.includes(origin)) return cb(null, true);
+      cb(null, false);
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 );

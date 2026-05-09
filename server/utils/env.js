@@ -12,3 +12,20 @@ export const isProduction = NODE_ENV === 'production';
 
 /** Admin/debug tools blocked unless explicitly enabled in production */
 export const adminToolsEnabled = process.env.ADMIN_TOOLS_ENABLED === 'true' || !isProduction;
+
+/**
+ * Browser + Vercel frontend origins allowed for CORS / Socket.IO.
+ * Override with CLIENT_ORIGINS="https://a.com,https://b.com" on Render.
+ */
+export function allowedCorsOrigins() {
+  const defaults = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://ludo-app-nine.vercel.app',
+  ];
+  const extra = (process.env.CLIENT_ORIGINS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return [...new Set([...defaults, ...extra])];
+}
