@@ -7,7 +7,7 @@ import { resizeImageFileToDataUrl } from '../utils/imageResize.js';
 export function Register() {
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', mobile: '', password: '', confirm: '' });
+  const [form, setForm] = useState({ username: '', email: '', mobile: '', password: '', confirm: '' });
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [avatarDataUrl, setAvatarDataUrl] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -48,6 +48,7 @@ export function Register() {
     setBusy(true);
     try {
       await register({
+        username: form.username,
         email: form.email,
         mobile: form.mobile,
         password: form.password,
@@ -86,6 +87,16 @@ export function Register() {
               </label>
               <span className="text-[10px] text-sky-300/70">JPG / PNG, cropped square works best</span>
             </div>
+
+            <label className="flex flex-col gap-1 text-sm">
+              <span className="text-sky-100/90">Username</span>
+              <input
+                className="rounded-xl border border-white/15 bg-black/35 px-3 py-2.5 text-white outline-none ring-sky-400/30 focus:ring-2"
+                value={form.username}
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                placeholder="Choose a display name"
+              />
+            </label>
 
             <label className="flex flex-col gap-1 text-sm">
               <span className="text-sky-100/90">Email</span>

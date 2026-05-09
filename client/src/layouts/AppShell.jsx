@@ -68,7 +68,7 @@ export function AppShell() {
             {isAuthenticated ? (
               <>
                 <span className="hidden text-xs text-slate-400 sm:inline">
-                  {user?.email || user?.mobile}
+                  {user?.username || user?.email || user?.mobile}
                 </span>
                 <button type="button" className="btn-outline px-3 py-1 text-xs" onClick={() => logout()}>
                   Log out

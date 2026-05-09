@@ -17,8 +17,9 @@ export const registerValidators = [
 ];
 
 export async function register(req, res) {
-  const { email, mobile, password, avatar } = req.body;
+  const { username, email, mobile, password, avatar } = req.body;
   const created = await registerUser({
+    username: username || '',
     email: email || '',
     mobile: mobile || '',
     password,

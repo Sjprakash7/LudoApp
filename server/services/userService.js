@@ -60,9 +60,10 @@ export function coerceAvatar(raw) {
   throw err;
 }
 
-export async function registerUser({ email, mobile, password, avatar }) {
+export async function registerUser({ username, email, mobile, password, avatar }) {
   const e = normalizeEmail(email);
   const m = normalizeMobile(mobile);
+  const name = String(username || '').trim();
   if (!password || password.length < 6) {
     const err = new Error('Password must be at least 6 characters');
     err.status = 400;
@@ -83,6 +84,7 @@ export async function registerUser({ email, mobile, password, avatar }) {
   const hash = await bcrypt.hash(password, 10);
   const user = {
     id: uuidv4(),
+    username: name || '',
     email: e || '',
     mobile: m || '',
     password: hash,

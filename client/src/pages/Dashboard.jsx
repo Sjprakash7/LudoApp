@@ -41,7 +41,7 @@ export function Dashboard() {
             className="text-3xl font-black text-white"
           >
             Welcome back,{' '}
-            <span className="neon-text">{user?.email || user?.mobile || 'player'}</span>
+            <span className="neon-text">{user?.username || user?.email || user?.mobile || 'player'}</span>
           </motion.h1>
           <p className="mt-2 max-w-prose text-slate-300">
             Neon tables are live — spin up a private code room or queue with friends. Real-time

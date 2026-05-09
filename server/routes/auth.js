@@ -17,6 +17,10 @@ r.post(
   '/register',
   [
     ...registerValidators,
+    body('username')
+      .optional({ checkFalsy: true })
+      .isLength({ min: 2, max: 32 })
+      .withMessage('Username must be 2-32 characters'),
     body().custom((_, { req }) => {
       const e = String(req.body.email || '').trim();
       const m = String(req.body.mobile || '').trim();
