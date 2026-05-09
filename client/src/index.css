@@ -124,4 +124,61 @@
   .ludo-cross-board {
     background: linear-gradient(145deg, #0a2a4a 0%, #051525 100%);
   }
+
+  .ludo-board-header {
+    @apply mb-4 flex items-center justify-between rounded-3xl border border-slate-700/60 bg-slate-950/90 px-4 py-3 shadow-[0_18px_52px_rgba(0,0,0,.35)];
+  }
+
+  .ludo-board-badge {
+    @apply rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-cyan-200;
+  }
+
+  .ludo-home-base {
+    @apply relative min-h-[58px] flex-1 overflow-hidden rounded-3xl border-[4px] border-white/20 shadow-inner;
+  }
+
+  .ludo-path-strip {
+    @apply relative flex-1 overflow-hidden rounded-3xl border-[4px] border-slate-200/15 bg-gradient-to-br from-white/95 to-slate-100/90 shadow-[inset_0_0_18px_rgba(0,0,0,.18)];
+  }
+
+  .ludo-token-bubble {
+    @apply relative flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/95 text-sm font-black text-slate-950 shadow-[0_12px_24px_rgba(0,0,0,.28)] transition;
+  }
+
+  .ludo-token-bubble.interactive {
+    @apply cursor-pointer ring-4 ring-white/80;
+  }
+
+  .ludo-token-inner {
+    @apply relative z-10 inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white text-base text-slate-950;
+  }
+
+  .ludo-token-inner::before {
+    content: '';
+    @apply absolute inset-0 rounded-full opacity-100;
+  }
+
+  .ludo-token-star {
+    @apply absolute -right-1 -top-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-[10px] font-bold text-slate-950 shadow-md;
+  }
+
+  .ludo-board-spot {
+    @apply rounded-2xl border border-slate-300/30 bg-slate-50 shadow-[inset_0_1px_2px_rgba(15,23,42,.08)];
+  }
+
+  .ludo-board-spot-safe {
+    @apply bg-slate-100/95 ring-1 ring-amber-300/20;
+  }
+
+  .ludo-center-castle {
+    @apply relative flex min-h-[80px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border-[4px] border-amber-300/50 bg-gradient-to-br from-slate-50 via-white to-slate-100 shadow-inner;
+  }
+
+  .ludo-center-block {
+    @apply aspect-square w-[90%] max-w-none rounded-[1.35rem] border-[3px] border-slate-900/10 bg-gradient-to-br from-[#FCE4EC] via-[#FFFDE7] to-[#E3F2FD] shadow-lg;
+  }
+
+  .ludo-center-dot {
+    @apply h-10 w-10 rounded-full shadow-[0_0_30px_rgba(0,0,0,.12)];
+  }
 }

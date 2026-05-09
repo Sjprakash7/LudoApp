@@ -104,33 +104,40 @@ export function Game() {
 
   return (
     <div className="ludo-pattern-bg min-h-[100dvh] px-2 pb-4 pt-2 sm:px-4">
-      <div className="mx-auto mb-2 flex max-w-lg items-center justify-between gap-2 text-[11px] text-sky-200/90">
-        <Link to="/lobby" className="rounded-lg border border-sky-500/40 px-3 py-1.5 font-bold text-white hover:bg-sky-500/15">
-          ← Lobby
-        </Link>
-        <span className="rounded-md bg-black/30 px-2 py-1 font-mono text-[10px] text-amber-100">
-          {roomId}
-        </span>
-        <div className="flex gap-1">
-          {isHost && room?.status === 'waiting' && (
-            <button type="button" className="menu-pyramid-btn !py-1.5 !text-[10px]" onClick={start}>
-              Start
+      <div className="mx-auto mb-4 max-w-lg rounded-[2rem] border border-white/10 bg-slate-950/80 p-4 shadow-[0_30px_70px_rgba(0,0,0,.45)] backdrop-blur-xl">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.35em] text-sky-300/80">Room code</div>
+            <div className="mt-1 text-2xl font-black tracking-[0.12em] text-white">{roomId}</div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {isHost && room?.status === 'waiting' && (
+              <button type="button" className="menu-pyramid-btn !px-5 !py-3 !text-sm" onClick={start}>
+                Start match
+              </button>
+            )}
+            <button
+              type="button"
+              className="rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/90 transition hover:border-cyan-400/40 hover:bg-cyan-500/10"
+              onClick={() => setMuted(!muted)}
+            >
+              {muted ? '🔇 Mute' : '🔊 Sound'}
             </button>
-          )}
-          <button
-            type="button"
-            className="rounded-lg border border-white/20 px-2 py-1 text-white/90"
-            onClick={() => setMuted(!muted)}
-          >
-            {muted ? '🔇' : '🔊'}
-          </button>
-          <button
-            type="button"
-            className="rounded-lg border border-white/20 px-2 py-1 text-white/90"
-            onClick={() => setChatOpen((v) => !v)}
-          >
-            💬
-          </button>
+            <button
+              type="button"
+              className="rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/90 transition hover:border-sky-400/40 hover:bg-sky-500/10"
+              onClick={() => setChatOpen((v) => !v)}
+            >
+              Chat
+            </button>
+          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-300">
+          <span>Players: {room?.players?.length ?? 0}/4</span>
+          <span>Status: {room?.status ?? 'loading'}</span>
+          <Link to="/lobby" className="rounded-2xl border border-slate-700/40 bg-white/5 px-3 py-2 text-sm text-slate-100 transition hover:bg-white/10">
+            ← Back to lobby
+          </Link>
         </div>
       </div>
 
