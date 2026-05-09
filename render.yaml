@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: ludoapp
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        scope: project
+      - key: PORT
+        value: 10000
+      - key: SEED_ADMIN_EMAIL
+        scope: project
+      - key: SEED_ADMIN_PASSWORD
+        scope: project
+      - key: ADMIN_TOOLS_ENABLED
+        value: false

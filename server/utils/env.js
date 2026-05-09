@@ -22,6 +22,8 @@ export function allowedCorsOrigins() {
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://ludo-app-nine.vercel.app',
+    'https://ludoapp.onrender.com',
+    'http://ludoapp.onrender.com',
   ];
   const extra = (process.env.CLIENT_ORIGINS || '')
     .split(',')

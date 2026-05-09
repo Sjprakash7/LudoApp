@@ -52,6 +52,9 @@ app.use(
 );
 app.use(express.json({ limit: '512kb' }));
 
+// Static files from built React app (production)
+app.use(express.static('client/dist', { maxAge: '1d' }));
+
 app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'ludo-app-backend' }));
 
 app.use('/api/auth', authRoutes);
@@ -59,7 +62,10 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/match', matchRoutes);
 app.use('/api/admin', adminRoutes);
 
-app.use((_req, res) => res.status(404).json({ message: 'Not found' }));
+// SPA fallback: serve index.html for non-API routes (React Router)
+app.get('*', (_req, res) => {
+  res.sendFile(new URL('../client/dist/index.html', import.meta.url).pathname);
+});
 
 registerSocketHandlers(io);
 
