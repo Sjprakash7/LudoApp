@@ -134,7 +134,7 @@ export function Game() {
         </div>
       </div>
 
-      <div className="mx-auto mb-3 flex max-w-lg justify-between gap-2 px-1">
+      <div className="mx-auto mb-3 flex max-w-lg flex-col gap-2 px-1 sm:flex-row sm:justify-between">
         <PlayerHud
           position="tl"
           player={playerAtSeat(room, 1)}
@@ -155,7 +155,7 @@ export function Game() {
         />
       </div>
 
-      <div className="mx-auto mb-3 max-w-lg">
+      <div className="mx-auto mb-3 max-w-[min(96vw,440px)]">
         <LudoBoard
           tokens={g?.tokens ?? []}
           turnSeat={g?.turnSeat}
@@ -168,7 +168,7 @@ export function Game() {
         />
       </div>
 
-      <div className="mx-auto mb-4 flex max-w-lg justify-between gap-2 px-1">
+      <div className="mx-auto mb-4 flex max-w-lg flex-col gap-2 px-1 sm:flex-row sm:justify-between">
         <PlayerHud
           position="bl"
           player={playerAtSeat(room, 0)}

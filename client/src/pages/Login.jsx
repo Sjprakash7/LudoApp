@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext.jsx';
 
 export function Login() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ emailOrMobile: '', password: '' });
   const [err, setErr] = useState('');
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/lobby', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   async function onSubmit(e) {
     e.preventDefault();

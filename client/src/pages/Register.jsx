@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext.jsx';
 import { resizeImageFileToDataUrl } from '../utils/imageResize.js';
 
 export function Register() {
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', mobile: '', password: '', confirm: '' });
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [avatarDataUrl, setAvatarDataUrl] = useState(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/lobby', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   async function onFile(e) {
     const file = e.target.files?.[0];

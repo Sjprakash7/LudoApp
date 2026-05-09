@@ -5,6 +5,8 @@
 import express from 'express';
 import cors from 'cors';
 import http from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { Server } from 'socket.io';
 import authRoutes from './routes/auth.js';
 import roomRoutes from './routes/rooms.js';
@@ -25,6 +27,9 @@ await ensureSeedAdmin(
 if (!process.env.JWT_SECRET) {
   console.warn('[ludo-app] JWT_SECRET missing — default dev secret active. Set JWT_SECRET for production.');
 }
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDist = path.join(__dirname, '..', 'client', 'dist');
 
 const app = express();
 const server = http.createServer(app);
@@ -53,7 +58,7 @@ app.use(
 app.use(express.json({ limit: '512kb' }));
 
 // Static files from built React app (production)
-app.use(express.static('client/dist', { maxAge: '1d' }));
+app.use(express.static(clientDist, { maxAge: '1d' }));
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'ludo-app-backend' }));
 
@@ -64,7 +69,7 @@ app.use('/api/admin', adminRoutes);
 
 // SPA fallback: serve index.html for non-API routes (React Router)
 app.get('*', (_req, res) => {
-  res.sendFile(new URL('../client/dist/index.html', import.meta.url).pathname);
+  res.sendFile(path.join(clientDist, 'index.html'));
 });
 
 registerSocketHandlers(io);

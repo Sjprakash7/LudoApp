@@ -22,7 +22,7 @@ export function PlayerHud({
   return (
     <div
       className={clsx(
-        'player-hud max-w-[min(46vw,200px)] min-w-[120px]',
+        'player-hud w-full max-w-full min-w-0 sm:max-w-[min(46vw,200px)]',
         flip && 'ml-auto flex-row-reverse text-right',
         isActiveTurn && 'player-hud--active'
       )}
